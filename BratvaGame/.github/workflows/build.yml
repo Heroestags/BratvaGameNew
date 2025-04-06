@@ -42,6 +42,15 @@ jobs:
           echo "export ANDROID_HOME=$HOME/android-sdk" >> $GITHUB_ENV
           echo "export PATH=$PATH:$ANDROID_HOME/cmdline-tools/bin" >> $GITHUB_ENV
 
+      - name: Remove default Android SDK folder
+        run: |
+          sudo rm -rf /root/.android-sdk || true
+
+      - name: Clean Buildozer cache
+        run: |
+          rm -rf $HOME/.buildozer || true
+          rm -rf BratvaGame/.buildozer || true
+
       - name: Initialize Buildozer
         run: |
           cd BratvaGame
@@ -81,7 +90,14 @@ jobs:
       - name: Build APK
         run: |
           cd BratvaGame
+          export ANDROID_HOME=$HOME/android-sdk
+          export ANDROID_SDK_ROOT=$HOME/android-sdk
+          export BUILDOZER_HOME=$HOME/buildozer-cache
           buildozer android debug
+        env:
+          ANDROID_HOME: /home/runner/android-sdk
+          ANDROID_SDK_ROOT: /home/runner/android-sdk
+          BUILDOZER_HOME: /home/runner/buildozer-cache
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
