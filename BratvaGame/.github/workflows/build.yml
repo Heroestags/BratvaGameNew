@@ -1,4 +1,11 @@
-name: Build APK
+- name: Build APK
+  run: |
+    cd BratvaGame
+    sudo buildozer android debug
+  env:
+    ANDROID_HOME: /home/runner/android-sdk
+    ANDROID_SDK_ROOT: /home/runner/android-sdk
+    BUILDOZER_HOME: /home/runner/buildozer-cache
 
 on:
   push:
