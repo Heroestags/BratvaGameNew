@@ -1,11 +1,4 @@
-- name: Build APK
-  run: |
-    cd BratvaGame
-    sudo buildozer android debug
-  env:
-    ANDROID_HOME: /home/runner/android-sdk
-    ANDROID_SDK_ROOT: /home/runner/android-sdk
-    BUILDOZER_HOME: /home/runner/buildozer-cache
+name: Build APK
 
 on:
   push:
@@ -100,7 +93,7 @@ jobs:
           export ANDROID_HOME=$HOME/android-sdk
           export ANDROID_SDK_ROOT=$HOME/android-sdk
           export BUILDOZER_HOME=$HOME/buildozer-cache
-          buildozer android debug
+          buildozer android debug --no-download
         env:
           ANDROID_HOME: /home/runner/android-sdk
           ANDROID_SDK_ROOT: /home/runner/android-sdk
