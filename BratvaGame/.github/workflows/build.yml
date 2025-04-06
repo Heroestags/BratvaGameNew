@@ -59,8 +59,24 @@ jobs:
           sed -i 's/android.api = 31/android.api = 33/' buildozer.spec
           sed -i 's/android.minapi = 21/android.minapi = 21/' buildozer.spec
           sed -i 's/#icon =/icon = images\/icon.png/' buildozer.spec
-          sed -i 's/#android.sdk_path =/android.sdk_path = \/root\/android-sdk/' buildozer.spec
+          sed -i 's/#android.sdk_path =/android.sdk_path = \/home\/runner\/android-sdk/' buildozer.spec
           sed -i 's/#android.ndk =/android.ndk = 23b/' buildozer.spec
+
+      - name: Set Android SDK environment variables
+        run: |
+          export ANDROID_HOME=$HOME/android-sdk
+          export ANDROID_SDK_ROOT=$HOME/android-sdk
+          export PATH=$PATH:$ANDROID_HOME/cmdline-tools/bin
+          echo "ANDROID_HOME=$HOME/android-sdk" >> $GITHUB_ENV
+          echo "ANDROID_SDK_ROOT=$HOME/android-sdk" >> $GITHUB_ENV
+          echo "PATH=$PATH:$ANDROID_HOME/cmdline-tools/bin" >> $GITHUB_ENV
+
+      - name: Debug Android SDK path
+        run: |
+          echo "ANDROID_HOME=$ANDROID_HOME"
+          echo "ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT"
+          ls -la $HOME/android-sdk
+          find $HOME/android-sdk -name "aidl"
 
       - name: Build APK
         run: |
