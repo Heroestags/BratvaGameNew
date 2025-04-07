@@ -55,11 +55,13 @@ jobs:
           echo "ANDROID_NDK=$ANDROID_NDK"
           ls -la $HOME/android-sdk
           ls -la $HOME/android-ndk-r23b
+          find $HOME/android-sdk -name "adb"
+          find $HOME/android-ndk-r23b -name "ndk-build"
 
       - name: Build APK with python-for-android
         run: |
           cd BratvaGame
-          p4a apk --private . --package=org.bratva.bratva --name "Bratva 90s" --version 0.1 --bootstrap=sdl2 --requirements=python3,kivy --arch=armeabi-v7a --arch=arm64-v8a --minsdk=21 --ndk-api=21 --permission=INTERNET --icon=images/icon.png --debug
+          p4a apk --private . --package=org.bratva.bratva --name "Bratva 90s" --version 0.1 --bootstrap=sdl2 --requirements=python3,kivy --arch=armeabi-v7a --arch=arm64-v8a --minsdk=21 --ndk-api=21 --permission=INTERNET --icon=images/icon.png --debug --verbose
         env:
           ANDROID_HOME: /home/runner/android-sdk
           ANDROID_SDK_ROOT: /home/runner/android-sdk
